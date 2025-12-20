@@ -71,11 +71,12 @@ export function setupInterceptors(client: AxiosInstance): void {
       }
 
       // Transform error to ApiError format
+      const responseData = error.response?.data as { details?: Record<string, string[]> } | undefined;
       const apiError: ApiError = {
         code: error.code || 'UNKNOWN_ERROR',
         message: error.message || 'An unexpected error occurred',
         statusCode: error.response?.status,
-        details: error.response?.data?.details,
+        details: responseData?.details,
       };
 
       return Promise.reject(apiError);

@@ -1,11 +1,12 @@
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
 /**
  * MMKV Storage Wrapper
  * High-performance local storage for React Native
  */
 
-export const storage = new MMKV();
+// Create MMKV instance
+export const storage = createMMKV({ id: 'app-storage' });
 
 export const storageKeys = {
   AUTH_TOKEN: 'auth_token',
@@ -57,7 +58,7 @@ export const Storage = {
   },
 
   delete: (key: string): void => {
-    storage.delete(key);
+    storage.remove(key);
   },
 
   clear: (): void => {

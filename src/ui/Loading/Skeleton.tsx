@@ -3,8 +3,10 @@ import { View, Animated, StyleSheet, ViewStyle } from 'react-native';
 import { colors } from '@/design/colors';
 import { radius } from '@/design/radius';
 
+type DimensionValue = number | `${number}%` | 'auto';
+
 export interface SkeletonProps {
-  width?: number | string;
+  width?: DimensionValue;
   height?: number;
   borderRadius?: number;
   style?: ViewStyle;

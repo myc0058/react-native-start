@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
+  StyleProp,
   ViewStyle,
   TextStyle,
   TouchableOpacityProps,
@@ -56,30 +57,30 @@ export function Button({
     onPress?.(event);
   };
 
-  const containerStyle: ViewStyle[] = [
-    styles.base,
-    styles[`${size}Container`],
-    fullWidth && styles.fullWidth,
-    variant === 'outline' && styles.outlineContainer,
-    variant === 'ghost' && styles.ghostContainer,
-    isDisabled && styles.disabled,
+  const containerStyles: StyleProp<ViewStyle> = [
+    viewStyles.base,
+    viewStyles[`${size}Container` as 'smContainer' | 'mdContainer' | 'lgContainer'],
+    fullWidth && viewStyles.fullWidth,
+    variant === 'outline' && viewStyles.outlineContainer,
+    variant === 'ghost' && viewStyles.ghostContainer,
+    isDisabled && viewStyles.disabled,
     style,
   ];
 
-  const textStyle: TextStyle[] = [
-    styles.text,
-    styles[`${size}Text`],
-    variant === 'secondary' && styles.secondaryText,
-    variant === 'outline' && styles.outlineText,
-    variant === 'ghost' && styles.ghostText,
-    isDisabled && styles.disabledText,
+  const textStyles: StyleProp<TextStyle> = [
+    textStyleSheet.text,
+    textStyleSheet[`${size}Text` as 'smText' | 'mdText' | 'lgText'],
+    variant === 'secondary' && textStyleSheet.secondaryText,
+    variant === 'outline' && textStyleSheet.outlineText,
+    variant === 'ghost' && textStyleSheet.ghostText,
+    isDisabled && textStyleSheet.disabledText,
   ];
 
   const content = (
     <>
-      {loading && <ActivityIndicator color={getSpinnerColor(variant)} style={styles.spinner} />}
+      {loading && <ActivityIndicator color={getSpinnerColor(variant)} style={viewStyles.spinner} />}
       {!loading && leftIcon && <>{leftIcon}</>}
-      <Text style={textStyle} numberOfLines={1}>
+      <Text style={textStyles} numberOfLines={1}>
         {children}
       </Text>
       {!loading && rightIcon && <>{rightIcon}</>}
@@ -98,7 +99,7 @@ export function Button({
           colors={colors.gradients.primary}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[containerStyle, styles.primaryContainer]}
+          style={[containerStyles, viewStyles.primaryContainer]}
         >
           {content}
         </LinearGradient>
@@ -109,9 +110,9 @@ export function Button({
   return (
     <TouchableOpacity
       style={[
-        containerStyle,
-        variant === 'primary' && !gradient && styles.primaryContainer,
-        variant === 'secondary' && styles.secondaryContainer,
+        containerStyles,
+        variant === 'primary' && !gradient && viewStyles.primaryContainer,
+        variant === 'secondary' && viewStyles.secondaryContainer,
       ]}
       onPress={handlePress}
       disabled={isDisabled}
@@ -137,7 +138,7 @@ function getSpinnerColor(variant: ButtonVariant): string {
   }
 }
 
-const styles = StyleSheet.create({
+const viewStyles = StyleSheet.create({
   base: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -145,8 +146,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     gap: spacing.sm,
   },
-
-  // Sizes
   smContainer: {
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
@@ -162,26 +161,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.lg,
     minHeight: 56,
   },
-
-  // Text sizes
-  smText: {
-    fontSize: typography.fontSize.sm,
-    fontWeight: typography.fontWeight.semibold,
-  },
-  mdText: {
-    fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.semibold,
-  },
-  lgText: {
-    fontSize: typography.fontSize.lg,
-    fontWeight: typography.fontWeight.semibold,
-  },
-
-  text: {
-    color: colors.text.primary,
-  },
-
-  // Variants
   primaryContainer: {
     backgroundColor: colors.primary[400],
     ...shadows.md,
@@ -199,7 +178,33 @@ const styles = StyleSheet.create({
   ghostContainer: {
     backgroundColor: 'transparent',
   },
+  disabled: {
+    opacity: 0.5,
+  },
+  fullWidth: {
+    width: '100%',
+  },
+  spinner: {
+    marginRight: spacing.xs,
+  },
+});
 
+const textStyleSheet = StyleSheet.create({
+  text: {
+    color: colors.text.primary,
+  },
+  smText: {
+    fontSize: typography.fontSize.sm,
+    fontWeight: typography.fontWeight.semibold as TextStyle['fontWeight'],
+  },
+  mdText: {
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.semibold as TextStyle['fontWeight'],
+  },
+  lgText: {
+    fontSize: typography.fontSize.lg,
+    fontWeight: typography.fontWeight.semibold as TextStyle['fontWeight'],
+  },
   secondaryText: {
     color: colors.text.primary,
   },
@@ -209,20 +214,10 @@ const styles = StyleSheet.create({
   ghostText: {
     color: colors.primary[400],
   },
-
-  // States
-  disabled: {
-    opacity: 0.5,
-  },
   disabledText: {
     color: colors.text.disabled,
   },
-
-  fullWidth: {
-    width: '100%',
-  },
-
-  spinner: {
-    marginRight: spacing.xs,
-  },
 });
+
+// Keep for backward compatibility
+const styles = { ...viewStyles, ...textStyleSheet };

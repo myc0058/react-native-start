@@ -20,6 +20,7 @@ module.exports = function (api) {
             '@': './src',
           },
         },
+        'module:react-native-dotenv'
       ],
     ],
   };

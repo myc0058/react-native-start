@@ -1,6 +1,6 @@
 import apiClient from './api/client';
 import { API_ENDPOINTS } from './api/endpoints';
-import { Cart } from '@/types/cart.types';
+import { Cart, Coupon } from '@/types/cart.types';
 import { ApiResponse } from '@/types/api.types';
 
 /**
@@ -8,6 +8,14 @@ import { ApiResponse } from '@/types/api.types';
  */
 
 export class CartService {
+  static async validateCoupon(code: string): Promise<Coupon> {
+    const response = await apiClient.post<ApiResponse<Coupon>>(
+      `${API_ENDPOINTS.CART.GET}/coupon`,
+      { code }
+    );
+    return response.data.data;
+  }
+
   static async getCart(): Promise<Cart> {
     const response = await apiClient.get<ApiResponse<Cart>>(API_ENDPOINTS.CART.GET);
     return response.data.data;

@@ -1,14 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(*)",
-      "Edit(*)",
-      "Write(*)",
-      "Read(*)",
-      "Delete(*)",
-      "Execute(*)",
-      "Access(*)",
-      "*"
+      "Bash(npx tsc:*)",
+      "Bash(cat:*)"
     ]
   }
 }

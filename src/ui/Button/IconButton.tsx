@@ -2,13 +2,13 @@ import React from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
+  StyleProp,
   ViewStyle,
   TouchableOpacityProps,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { colors } from '@/design/colors';
 import { radius } from '@/design/radius';
-import { spacing } from '@/design/spacing';
 import { shadows } from '@/design/shadows';
 
 export type IconButtonVariant = 'primary' | 'secondary' | 'ghost';
@@ -39,9 +39,9 @@ export function IconButton({
     onPress?.(event);
   };
 
-  const containerStyle: ViewStyle[] = [
+  const containerStyle: StyleProp<ViewStyle> = [
     styles.base,
-    styles[`${size}Container`],
+    styles[`${size}Container` as 'smContainer' | 'mdContainer' | 'lgContainer'],
     variant === 'primary' && styles.primaryContainer,
     variant === 'secondary' && styles.secondaryContainer,
     variant === 'ghost' && styles.ghostContainer,
