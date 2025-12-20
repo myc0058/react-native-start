@@ -5,6 +5,8 @@ import {
   Text,
   StyleSheet,
   TextInputProps as RNTextInputProps,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 import { colors } from '@/design/colors';
 import { radius } from '@/design/radius';
@@ -17,6 +19,7 @@ export interface TextInputProps extends RNTextInputProps {
   helperText?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export function TextInput({
@@ -25,13 +28,14 @@ export function TextInput({
   helperText,
   leftIcon,
   rightIcon,
+  containerStyle,
   style,
   ...props
 }: TextInputProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {label && <Text style={styles.label}>{label}</Text>}
 
       <View

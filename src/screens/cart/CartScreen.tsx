@@ -11,6 +11,7 @@ import { useCart } from '@/hooks/useCart';
 import { useCartNavigation } from '@/navigation/hooks';
 import { QuantitySelector } from '../components/QuantitySelector';
 import { EmptyState } from '../components/EmptyState';
+import { formatPrice } from '@/utils/formatters';
 
 export function CartScreen() {
   const navigation = useCartNavigation();
@@ -65,7 +66,7 @@ export function CartScreen() {
                   {item.selectedColor ? `${item.selectedColor} • ` : ''}
                   {item.selectedSize || ''}
                 </Text>
-                <Text style={styles.price}>{formatCurrency(item.product.price)}</Text>
+                <Text style={styles.price}>{formatPrice(item.product.price)}</Text>
                 <View style={styles.controls}>
                   <QuantitySelector
                     value={item.quantity}
@@ -86,24 +87,24 @@ export function CartScreen() {
 
         <View style={styles.rowBetween}>
           <Text style={styles.label}>Subtotal</Text>
-          <Text style={styles.value}>{formatCurrency(subtotal)}</Text>
+          <Text style={styles.value}>{formatPrice(subtotal)}</Text>
         </View>
         <View style={styles.rowBetween}>
           <Text style={styles.label}>Discount</Text>
-          <Text style={styles.value}>-{formatCurrency(discount)}</Text>
+          <Text style={styles.value}>-{formatPrice(discount)}</Text>
         </View>
         <View style={styles.rowBetween}>
           <Text style={styles.label}>Shipping</Text>
-          <Text style={styles.value}>{formatCurrency(shipping)}</Text>
+          <Text style={styles.value}>{formatPrice(shipping)}</Text>
         </View>
         <View style={styles.rowBetween}>
           <Text style={styles.label}>Tax</Text>
-          <Text style={styles.value}>{formatCurrency(tax)}</Text>
+          <Text style={styles.value}>{formatPrice(tax)}</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.rowBetween}>
           <Text style={styles.total}>Total</Text>
-          <Text style={styles.total}>{formatCurrency(total)}</Text>
+          <Text style={styles.total}>{formatPrice(total)}</Text>
         </View>
 
         <View style={styles.couponRow}>
@@ -112,9 +113,14 @@ export function CartScreen() {
             value={couponCode}
             onChangeText={setCouponCode}
             autoCapitalize="characters"
-            style={styles.couponInput}
+            containerStyle={styles.couponInput}
           />
-          <Button size="sm" onPress={handleApplyCoupon} loading={isLoading}>
+          <Button
+            size="sm"
+            onPress={handleApplyCoupon}
+            loading={isLoading}
+            style={styles.couponButton}
+          >
             Apply
           </Button>
         </View>
@@ -131,10 +137,6 @@ export function CartScreen() {
       </View>
     </View>
   );
-}
-
-function formatCurrency(value: number): string {
-  return `₩${value.toLocaleString()}`;
 }
 
 const styles = StyleSheet.create({
@@ -230,6 +232,10 @@ const styles = StyleSheet.create({
   },
   couponInput: {
     flex: 1,
+    minWidth: 0,
+  },
+  couponButton: {
+    minWidth: 92,
   },
   applied: {
     marginTop: spacing.xs,
