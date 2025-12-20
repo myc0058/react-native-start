@@ -38,3 +38,7 @@ export const APP_VERSION = '1.0.0';
 export const SUPPORT_EMAIL = 'support@shoppingmall.com';
 export const PRIVACY_POLICY_URL = 'https://shoppingmall.com/privacy';
 export const TERMS_OF_SERVICE_URL = 'https://shoppingmall.com/terms';
+
+// Development
+// When true, services return mock data instead of calling backend APIs.
+export const USE_MOCK_API = true;
