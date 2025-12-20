@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { storage } from '@/utils/storage';
+import { persistStorage } from '@/utils/storage';
 import { Product } from '@/types/product.types';
 
 interface WishlistState {
@@ -19,19 +19,6 @@ interface WishlistActions {
 }
 
 type WishlistStore = WishlistState & WishlistActions;
-
-const zustandStorage = {
-  getItem: (name: string) => {
-    const value = storage.getString(name);
-    return value ?? null;
-  },
-  setItem: (name: string, value: string) => {
-    storage.set(name, value);
-  },
-  removeItem: (name: string) => {
-    storage.remove(name);
-  },
-};
 
 export const useWishlistStore = create<WishlistStore>()(
   persist(
@@ -73,7 +60,7 @@ export const useWishlistStore = create<WishlistStore>()(
     }),
     {
       name: 'wishlist-storage',
-      storage: createJSONStorage(() => zustandStorage),
+      storage: createJSONStorage(() => persistStorage),
       partialize: (state) => ({
         items: state.items,
       }),

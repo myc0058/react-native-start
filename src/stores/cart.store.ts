@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { storage } from '@/utils/storage';
+import { persistStorage } from '@/utils/storage';
 import { CartItem, Coupon } from '@/types/cart.types';
 import { Product } from '@/types/product.types';
 
@@ -30,19 +30,6 @@ interface CartComputed {
 }
 
 type CartStore = CartState & CartActions & CartComputed;
-
-const zustandStorage = {
-  getItem: (name: string) => {
-    const value = storage.getString(name);
-    return value ?? null;
-  },
-  setItem: (name: string, value: string) => {
-    storage.set(name, value);
-  },
-  removeItem: (name: string) => {
-    storage.remove(name);
-  },
-};
 
 const SHIPPING_THRESHOLD = 50000; // 무료배송 기준
 const SHIPPING_COST = 3000; // 배송비
@@ -169,7 +156,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'cart-storage',
-      storage: createJSONStorage(() => zustandStorage),
+      storage: createJSONStorage(() => persistStorage),
       partialize: (state) => ({
         items: state.items,
         coupon: state.coupon,

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { storage } from '@/utils/storage';
+import { persistStorage } from '@/utils/storage';
 import { User, AuthTokens } from '@/types/user.types';
 
 interface AuthState {
@@ -22,19 +22,6 @@ interface AuthActions {
 }
 
 type AuthStore = AuthState & AuthActions;
-
-const zustandStorage = {
-  getItem: (name: string) => {
-    const value = storage.getString(name);
-    return value ?? null;
-  },
-  setItem: (name: string, value: string) => {
-    storage.set(name, value);
-  },
-  removeItem: (name: string) => {
-    storage.remove(name);
-  },
-};
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -80,7 +67,7 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => zustandStorage),
+      storage: createJSONStorage(() => persistStorage),
       partialize: (state) => ({
         user: state.user,
         tokens: state.tokens,

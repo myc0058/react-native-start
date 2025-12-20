@@ -3,40 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ShopStackParamList } from '../types';
 import { colors } from '@/design/colors';
 import { typography } from '@/design/typography';
-
-// Placeholder screens - replace with actual screens
-import { View, Text, StyleSheet } from 'react-native';
-
-const ProductListScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Product List Screen</Text>
-  </View>
-);
-
-const ProductDetailScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Product Detail Screen</Text>
-  </View>
-);
-
-const SearchScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Search Screen</Text>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  placeholder: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.background.primary,
-  },
-  text: {
-    fontSize: 18,
-    color: colors.text.secondary,
-  },
-});
+import { ProductListScreen, ProductDetailScreen, SearchScreen } from '@/screens';
 
 const Stack = createNativeStackNavigator<ShopStackParamList>();
 
@@ -59,7 +26,7 @@ export function ShopStack() {
       <Stack.Screen
         name="ProductList"
         component={ProductListScreen}
-        options={{ headerTitle: '쇼핑' }}
+        options={{ headerTitle: 'Shop' }}
       />
       <Stack.Screen
         name="ProductDetail"
@@ -70,7 +37,7 @@ export function ShopStack() {
         name="Search"
         component={SearchScreen}
         options={{
-          headerTitle: '검색',
+          headerTitle: 'Search',
           animation: 'fade',
         }}
       />

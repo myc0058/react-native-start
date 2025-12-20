@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 import { MainTabParamList } from './types';
 import { HomeStack, ShopStack, CartStack, OrdersStack, ProfileStack } from './stacks';
 import { colors } from '@/design/colors';
@@ -8,30 +9,30 @@ import { useCartStore } from '@/stores';
 
 // Tab Icon component
 interface TabIconProps {
-  name: string;
+  name: keyof MainTabParamList;
   focused: boolean;
   badge?: number;
 }
 
 function TabIcon({ name, focused, badge }: TabIconProps) {
-  const icons: Record<string, string> = {
-    Home: '🏠',
-    Shop: '🛍️',
-    Cart: '🛒',
-    Orders: '📦',
-    Profile: '👤',
+  const iconNames: Record<keyof MainTabParamList, keyof typeof Ionicons.glyphMap> = {
+    Home: 'home',
+    Shop: 'bag-handle',
+    Cart: 'cart',
+    Orders: 'cube',
+    Profile: 'person',
   };
 
   return (
     <View style={styles.iconContainer}>
-      <Text style={[styles.icon, focused && styles.iconFocused]}>
-        {icons[name]}
-      </Text>
+      <Ionicons
+        name={iconNames[name]}
+        size={22}
+        color={focused ? colors.primary[400] : colors.text.tertiary}
+      />
       {badge !== undefined && badge > 0 && (
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>
-            {badge > 99 ? '99+' : badge}
-          </Text>
+          <Text style={styles.badgeText}>{badge > 99 ? '99+' : badge}</Text>
         </View>
       )}
     </View>
@@ -57,7 +58,7 @@ export function MainTabNavigator() {
         name="Home"
         component={HomeStack}
         options={{
-          tabBarLabel: '홈',
+          tabBarLabel: 'Home',
           tabBarIcon: ({ focused }) => <TabIcon name="Home" focused={focused} />,
         }}
       />
@@ -65,7 +66,7 @@ export function MainTabNavigator() {
         name="Shop"
         component={ShopStack}
         options={{
-          tabBarLabel: '쇼핑',
+          tabBarLabel: 'Shop',
           tabBarIcon: ({ focused }) => <TabIcon name="Shop" focused={focused} />,
         }}
       />
@@ -73,7 +74,7 @@ export function MainTabNavigator() {
         name="Cart"
         component={CartStack}
         options={{
-          tabBarLabel: '장바구니',
+          tabBarLabel: 'Cart',
           tabBarIcon: ({ focused }) => (
             <TabIcon name="Cart" focused={focused} badge={cartItemCount} />
           ),
@@ -83,7 +84,7 @@ export function MainTabNavigator() {
         name="Orders"
         component={OrdersStack}
         options={{
-          tabBarLabel: '주문',
+          tabBarLabel: 'Orders',
           tabBarIcon: ({ focused }) => <TabIcon name="Orders" focused={focused} />,
         }}
       />
@@ -91,7 +92,7 @@ export function MainTabNavigator() {
         name="Profile"
         component={ProfileStack}
         options={{
-          tabBarLabel: '마이',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({ focused }) => <TabIcon name="Profile" focused={focused} />,
         }}
       />

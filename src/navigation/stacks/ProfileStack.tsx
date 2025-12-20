@@ -3,52 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../types';
 import { colors } from '@/design/colors';
 import { typography } from '@/design/typography';
-
-// Placeholder screens - replace with actual screens
-import { View, Text, StyleSheet } from 'react-native';
-
-const ProfileScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Profile Screen</Text>
-  </View>
-);
-
-const SettingsScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Settings Screen</Text>
-  </View>
-);
-
-const EditProfileScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Edit Profile Screen</Text>
-  </View>
-);
-
-const AddressesScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Addresses Screen</Text>
-  </View>
-);
-
-const WishlistScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Wishlist Screen</Text>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  placeholder: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.background.primary,
-  },
-  text: {
-    fontSize: 18,
-    color: colors.text.secondary,
-  },
-});
+import {
+  ProfileScreen,
+  SettingsScreen,
+  EditProfileScreen,
+  AddressesScreen,
+  WishlistScreen,
+} from '@/screens';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
 
@@ -71,27 +32,27 @@ export function ProfileStack() {
       <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: '마이페이지' }}
+        options={{ headerTitle: 'Profile' }}
       />
       <Stack.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ headerTitle: '설정' }}
+        options={{ headerTitle: 'Settings' }}
       />
       <Stack.Screen
         name="EditProfile"
         component={EditProfileScreen}
-        options={{ headerTitle: '프로필 수정' }}
+        options={{ headerTitle: 'Edit Profile' }}
       />
       <Stack.Screen
         name="Addresses"
         component={AddressesScreen}
-        options={{ headerTitle: '배송지 관리' }}
+        options={{ headerTitle: 'Addresses' }}
       />
       <Stack.Screen
         name="Wishlist"
         component={WishlistScreen}
-        options={{ headerTitle: '위시리스트' }}
+        options={{ headerTitle: 'Wishlist' }}
       />
     </Stack.Navigator>
   );

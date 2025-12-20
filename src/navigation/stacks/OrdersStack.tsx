@@ -3,34 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { OrdersStackParamList } from '../types';
 import { colors } from '@/design/colors';
 import { typography } from '@/design/typography';
-
-// Placeholder screens - replace with actual screens
-import { View, Text, StyleSheet } from 'react-native';
-
-const OrderHistoryScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Order History Screen</Text>
-  </View>
-);
-
-const OrderDetailScreen = () => (
-  <View style={styles.placeholder}>
-    <Text style={styles.text}>Order Detail Screen</Text>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  placeholder: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.background.primary,
-  },
-  text: {
-    fontSize: 18,
-    color: colors.text.secondary,
-  },
-});
+import { OrderHistoryScreen, OrderDetailScreen } from '@/screens';
 
 const Stack = createNativeStackNavigator<OrdersStackParamList>();
 
@@ -53,12 +26,12 @@ export function OrdersStack() {
       <Stack.Screen
         name="OrderHistory"
         component={OrderHistoryScreen}
-        options={{ headerTitle: '주문 내역' }}
+        options={{ headerTitle: 'Orders' }}
       />
       <Stack.Screen
         name="OrderDetail"
         component={OrderDetailScreen}
-        options={{ headerTitle: '주문 상세' }}
+        options={{ headerTitle: 'Order Detail' }}
       />
     </Stack.Navigator>
   );
